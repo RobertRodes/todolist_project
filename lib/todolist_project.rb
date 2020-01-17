@@ -2,11 +2,14 @@
 # data: name and description. There's also a "done"
 # flag to show whether this todo item is done.
 
+require 'bundler/setup'
+require 'stamp'
+
 class Todo
   DONE_MARKER = 'X'
   UNDONE_MARKER = ' '
 
-  attr_accessor :title, :description, :done
+  attr_accessor :title, :description, :done, :due_date
 
   def initialize(title, description='')
     @title = title
@@ -26,9 +29,15 @@ class Todo
     self.done = false
   end
 
-  def to_s
-    "[#{done? ? DONE_MARKER : UNDONE_MARKER}] #{title}"
+  def to_s # replaces original #to_s method
+    result = "[#{done? ? DONE_MARKER : UNDONE_MARKER}] #{title}"
+    result += due_date.stamp(' (Due: Friday January 6)') if due_date
+    result
   end
+
+  # def to_s
+  #   "[#{done? ? DONE_MARKER : UNDONE_MARKER}] #{title}"
+  # end
 
   def ==(otherTodo)
     title == otherTodo.title &&
@@ -152,4 +161,16 @@ class TodoList
     each { |todo| todo.undone! }
   end
 end
+
+# todo1 = Todo.new('Buy milk')
+# todo2 = Todo.new('Clean room')
+# todo3 = Todo.new('Go to gym')
+# todos = [todo1, todo2, todo3]
+
+# list = TodoList.new("Today's Todos")
+# list.add(todo1)
+# list.add(todo2)
+# list.add(todo3)
+
+# puts list
 
