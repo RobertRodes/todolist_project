@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!
 
-require_relative '../lib/todolist_project'
+require_relative '../lib/todolist_project_rodes'
 
 class TodoListTest < MiniTest::Test
   def setup
